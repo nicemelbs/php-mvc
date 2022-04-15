@@ -1,0 +1,15 @@
+{
+    "name": "melbs/php-mvc",
+    "autoload": {
+        "psr-4": {
+            "Melbs\\PhpMvc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Melvin San Jose",
+            "email": "sanjose.melvin@gmail.com"
+        }
+    ],
+    "require": {}
+}

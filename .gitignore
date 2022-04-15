@@ -3,3 +3,4 @@
 #notes.md = just my train of thought
 notes.md
 .idea/*
+/vendor/
