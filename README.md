@@ -6,6 +6,4 @@
 
 * Social media integration login.
 
-Get your Steam API key from https://steamcommunity.com/dev/apikey
-
 Create a .env file and set your API key. You can use the `.env.example` as reference.
