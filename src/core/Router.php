@@ -6,10 +6,12 @@ class Router
 {
     protected array $routes = [];
     public Request $request;
+    public Response $response;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
     public function get(string $path, $callback)
@@ -26,7 +28,9 @@ class Router
         $callback = $this->routes[$method][$path] ?? false;
 
         if ($callback === false) {
+            $this->response->setStatusCode(404);
             return 'HTTP 404';
+
         }
 
         if (is_string($callback)) {
@@ -36,25 +40,29 @@ class Router
         return call_user_func($callback);
     }
 
-    private function renderView($view)
+    protected function renderView($view)
     {
+        $layoutContent = $this->layoutContent();
+        $viewContent = $this->renderOnlyView($view);
 
-        ob_start();
-        include_once Application::$ROOT_DIR . "/src/views/$view.php";
-        $content = ob_get_contents();
-        ob_clean();
-
-        return $this->layoutContent($content);
+        return str_replace('{{ content }}', $viewContent, $layoutContent);
     }
 
-    protected function layoutContent($content)
+    protected function layoutContent()
     {
+        //output buffering way to store output to variables
         ob_start();
         include_once Application::$ROOT_DIR . "/src/views/layouts/main.php";
 
-        $layout = ob_get_contents();
-        $page = str_replace('{{ content }}', $content, $layout);
-        ob_clean();
-        return $page;
+        //ob_get_clean - returns the value of the
+        //current output buffer and cleans the buffer
+        return ob_get_clean();
+    }
+
+    protected function renderOnlyView($view)
+    {
+        ob_start();
+        include_once Application::$ROOT_DIR . "/src/views/$view.php";
+        return ob_get_clean();
     }
 }
