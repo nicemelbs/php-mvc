@@ -1,15 +1,17 @@
 {
-    "name": "melbs/php-mvc",
-    "autoload": {
-        "psr-4": {
-            "Melbs\\PhpMvc\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Melvin San Jose",
-            "email": "sanjose.melvin@gmail.com"
-        }
-    ],
-    "require": {}
+  "name": "melbs/php-mvc",
+  "autoload": {
+    "psr-4": {
+      "app\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Melvin San Jose",
+      "email": "sanjose.melvin@gmail.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^7.4"
+  }
 }
