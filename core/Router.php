@@ -52,7 +52,7 @@ class Router
     {
         //output buffering way to store output to variables
         ob_start();
-        include_once Application::$ROOT_DIR . "/src/views/layouts/main.php";
+        include_once Application::$ROOT_DIR . "/views/layouts/main.php";
 
         //ob_get_clean - returns the value of the
         //current output buffer and cleans the buffer
@@ -62,7 +62,7 @@ class Router
     protected function renderOnlyView($view)
     {
         ob_start();
-        include_once Application::$ROOT_DIR . "/src/views/$view.php";
+        include_once Application::$ROOT_DIR . "/views/$view.php";
         return ob_get_clean();
     }
 }
