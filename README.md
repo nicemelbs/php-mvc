@@ -5,5 +5,3 @@
 * Show database queries in MongoDB or other database program.
 
 * Social media integration login.
-
-Create a .env file and set your API key. You can use the `.env.example` as reference.
