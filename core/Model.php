@@ -85,10 +85,9 @@ abstract class Model
         ];
     }
 
-    public function getFirstError()
+    public function getFirstError($attribute)
     {
-        $errors = array_shift($this->errors);
-        return array_shift($errors);
+        return $this->errors[$attribute][0] ?? '';
     }
 
 
@@ -97,5 +96,10 @@ abstract class Model
     private function isUnique(int $attribute, $value): bool
     {
         return true;
+    }
+
+    public function hasError($attribute): bool
+    {
+        return isset($this->errors[$attribute]);
     }
 }

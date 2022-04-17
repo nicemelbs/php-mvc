@@ -2,6 +2,8 @@
 
 namespace app\core\forms;
 
+use app\core\Model;
+
 class Form
 {
 
@@ -23,5 +25,9 @@ class Form
         echo '</form>';
     }
 
+    public function field(Model $model, $attribute): Field
+    {
+        return new Field($model, $attribute);
+    }
 
 }
