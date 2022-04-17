@@ -11,10 +11,10 @@ class SiteController extends Controller
     {
         $body = $request->getBody();
 
-        echo '<pre>';
-        var_dump($body);
-        echo '</pre>';
-        exit;
+//        echo '<pre>';
+//        var_dump($body);
+//        echo '</pre>';
+//        exit;
     }
 
     public function home()

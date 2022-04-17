@@ -22,3 +22,14 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<?php
+//if errors exist, display them
+if (isset($errors) && !empty($errors)) {
+    echo '<div class="alert alert-danger" role="alert">';
+    foreach ($errors as $error) {
+        echo $error . '<br>';
+    }
+    echo '</div>';
+}
+?>
