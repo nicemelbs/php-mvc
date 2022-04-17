@@ -14,7 +14,8 @@ class UserModel extends Model
 
     public function register()
     {
-
+        //TODO: add logic
+        return true;
     }
 
     public function rules(): array
