@@ -2,8 +2,6 @@
 
 namespace app\core;
 
-use app\controllers\Controller;
-
 class Application
 {
     public Router $router;

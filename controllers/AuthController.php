@@ -2,20 +2,36 @@
 
 namespace app\controllers;
 
+use app\core\Controller;
 use app\core\Request;
+use app\models\UserModel;
 
 class AuthController extends Controller
 {
 
     public function register(Request $request)
     {
-        $this->setLayout('auth');
+
+        $userModel = new UserModel();
 
         if ($request->isPost()) {
-            return "Handle data";
+            $userModel->loadData($request->getBody());
+            echo '<pre>';
+            var_dump($userModel);
+            echo '</pre>';
+            exit;
+            if ($userModel->validate() && $userModel->register()) {
+                return 'Success';
+            }
+            return $this->render('register', [
+                'model' => $userModel
+            ]);
         }
 
-        return $this->render("register");
+        $this->setLayout('auth');
+        return $this->render('register', [
+            'model' => $userModel
+        ]);
     }
 
 

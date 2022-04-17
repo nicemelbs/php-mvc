@@ -38,8 +38,8 @@ class Router
         }
 
         if (is_array($callback)) {
-            Application::$app->setController($callback[0]);
             $callback[0] = new $callback[0]();
+            Application::$app->setController($callback[0]);
         }
 
         return call_user_func($callback, $this->request);
