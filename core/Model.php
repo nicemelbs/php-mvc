@@ -45,15 +45,15 @@ abstract class Model
 
                 //rule[1] is the value of the rule
                 //$value being an empty string is redundant for length validation
-                if ($ruleName === self::RULE_MIN && !empty($value) && strlen($value) < $rule[1]) {
-                    $this->addError($attribute, self::RULE_MIN);
+                if ($ruleName === self::RULE_MIN && !empty($value) && strlen($value) < $rule['min']) {
+                    $this->addError($attribute, self::RULE_MIN, $rule);
                 }
 
-                if ($ruleName === self::RULE_MAX && strlen($value) > $rule[1]) {
-                    $this->addError($attribute, self::RULE_MAX);
+                if ($ruleName === self::RULE_MAX && strlen($value) > $rule['max']) {
+                    $this->addError($attribute, self::RULE_MAX, $rule);
                 }
 
-                if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule[1]['match']}) {
+                if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
                     $this->addError($attribute, self::RULE_MATCH);
                 }
             }
@@ -64,9 +64,12 @@ abstract class Model
     }
 
     //adds error to $errors array
-    protected function addError($attribute, $rule)
+    protected function addError($attribute, $rule, $params = [])
     {
         $message = $this->errorMessages()[$rule] ?? '';
+        foreach ($params as $key => $value) {
+            $message = str_replace("{{$key}}", $value, $message);
+        }
         $this->errors[$attribute][] = $message;
     }
 
@@ -75,11 +78,17 @@ abstract class Model
         return [
             self::RULE_REQUIRED => 'This field is required',
             self::RULE_EMAIL => 'Email is not valid',
-            self::RULE_MIN => 'Value is too short',
-            self::RULE_MAX => 'Value is too long',
+            self::RULE_MIN => 'Must be {min} characters or more',
+            self::RULE_MAX => 'Must be {max} characters or fewer',
             self::RULE_MATCH => 'Values do not match',
             self::RULE_UNIQUE => 'Value is not unique',
         ];
+    }
+
+    public function getFirstError()
+    {
+        $errors = array_shift($this->errors);
+        return array_shift($errors);
     }
 
 
