@@ -21,7 +21,10 @@ class UserModel extends Model
     public function rules(): array
     {
         return [
-            'firstname' => [self::RULE_REQUIRED],
+            //doesn't make sense in the real world to limit the length of the firstname
+            //but it's a good example of how to use the validation rules
+            'firstname' => [self::RULE_REQUIRED, [self::RULE_MAX, 'max' => 10]],
+
             'lastname' => [self::RULE_REQUIRED],
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8]],
