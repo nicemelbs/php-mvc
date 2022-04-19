@@ -1,3 +1,8 @@
+<?php
+
+use app\core\Application;
+
+?>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -32,6 +37,16 @@
         </div>
     </div>
 </nav>
+
+<?php if (Application::$app->session->hasFlash('success')) { ?>
+
+    <div class="container">
+        <div class="alert alert-success">
+            <?= Application::$app->session->getFlash('success') ?>
+        </div>
+    </div>
+<?php } ?>
+
 <div class="container">{{ content }}</div>
 
 <div class="container">

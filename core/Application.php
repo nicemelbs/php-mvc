@@ -10,6 +10,7 @@ class Application
     public static string $ROOT_DIR;
     public static Application $app;
     public Controller $controller;
+    public Session $session;
     public Database $db;
 
     public function __construct($rootPath, array $config)
@@ -19,6 +20,7 @@ class Application
         $this->request = new Request();
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
+        $this->session = new Session();
         $this->db = new Database($config['db']);
 
     }
@@ -44,7 +46,7 @@ class Application
         $this->controller = $controller;
     }
 
-    public function getLayout()
+    public function getLayout(): string
     {
         return $this->getController()->getLayout();
     }

@@ -11,6 +11,7 @@ class UserModel extends DbModel
     public string $email = '';
     public string $password = '';
     public string $passwordConfirm = '';
+    public string $tableName = 'users';
 
     public function save()
     {
@@ -36,7 +37,7 @@ class UserModel extends DbModel
 
     public function tableName(): string
     {
-        return 'users';
+        return $this->tableName;
     }
 
     public function attributes(): array
