@@ -5,7 +5,7 @@ namespace app\controllers;
 use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
-use app\models\UserModel;
+use app\models\User;
 
 class AuthController extends Controller
 {
@@ -14,7 +14,7 @@ class AuthController extends Controller
     {
 
         $this->setLayout('auth');
-        $userModel = new UserModel();
+        $userModel = new User();
 
         if ($request->isPost()) {
             $userModel->loadData($request->getBody());
@@ -42,7 +42,7 @@ class AuthController extends Controller
 
     {
         $this->setLayout('auth');
-        $userModel = new UserModel();
+        $userModel = new User();
 
         if ($request->isPost()) {
             $userModel->loadData($request->getBody());
