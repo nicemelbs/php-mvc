@@ -104,4 +104,12 @@ abstract class Model
     {
         return isset($this->errors[$attribute]);
     }
+
+    //returns labels for form fields as an array
+    public function labels(): array
+    {
+        return [
+        ];
+
+    }
 }

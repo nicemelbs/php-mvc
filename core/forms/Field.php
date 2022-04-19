@@ -29,17 +29,19 @@ class Field
 
     public function __toString()
     {
+//        echo '<pre>';
+//        var_dump($this->attribute, $this->model->labels()[$this->attribute]);
+//        echo '</pre>';
         return sprintf('
             <div class="form-group">
                 <label for="%s">%s</label>
                 <input type="%s" class="form-control %s" id="%s" name="%s" value="%s">
             </div>
-        <div class="invalid-feedback d-block">%s</div>
-        ',
+        <div class="invalid-feedback d-block">%s</div>',
             $this->attribute,
-            $this->attribute,
+            $this->model->labels()[$this->attribute] ?? $this->attribute,
             $this->type,
-            $this->model->hasError($this->attribute) ? 'is-invalid' : '',
+            $this->attribute,
             $this->attribute,
             $this->attribute,
             $this->model->{$this->attribute},
