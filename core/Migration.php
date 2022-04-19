@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use app\core\db\Database;
+
 class Migration
 {
     public function up()

@@ -1,5 +1,6 @@
 <?php
 
+use app\core\forms\Button;
 use app\core\forms\Form;
 use app\core\forms\InputField;
 
@@ -11,8 +12,10 @@ $this->title = 'Login';
 
 ?>
     <h1>Log in</h1>
-<?php $form = Form::begin('', 'POST'); ?>
-<?php echo $form->field($model, 'email')->setType(InputField::TYPE_EMAIL); ?>
-<?php echo $form->field($model, 'password')->setType(InputField::TYPE_PASSWORD); ?>
-    <button type="submit" class="btn btn-primary">Login</button>
-<?php Form::end(); ?>
+<?php
+$form = Form::begin('', 'POST');
+echo new InputField($model, 'email', InputField::TYPE_EMAIL);
+echo new InputField($model, 'password', InputField::TYPE_PASSWORD);
+echo new Button($model, 'submit', 'Log in');
+Form::end();
+?>

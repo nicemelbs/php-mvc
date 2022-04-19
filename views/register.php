@@ -2,6 +2,7 @@
 
 <?php
 
+use app\core\forms\Button;
 use app\core\forms\Form;
 use app\core\forms\InputField;
 
@@ -10,14 +11,16 @@ use app\core\forms\InputField;
 <?php $form = Form::begin('', 'post'); ?>
 <div class="row">
     <div class="col">
-        <?php echo $form->field($model, 'firstname'); ?>
+        <?php echo new InputField($model, 'firstname'); ?>
     </div>
     <div class="col">
-        <?php echo $form->field($model, 'lastname'); ?>
+        <?php echo new InputField($model, 'lastname'); ?>
     </div>
 </div>
-<?php echo $form->field($model, 'email')->setType(InputField::TYPE_EMAIL); ?>
-<?php echo $form->field($model, 'password')->setType(InputField::TYPE_PASSWORD); ?>
-<?php echo $form->field($model, 'passwordConfirm')->setType(InputField::TYPE_PASSWORD); ?>
-<button type="submit" class="btn btn-primary">Submit</button>
-<?php echo Form::end(); ?>
+<?php
+echo new InputField($model, 'email', InputField::TYPE_EMAIL);
+echo new InputField($model, 'password', InputField::TYPE_PASSWORD);
+echo new InputField($model, 'passwordConfirm', InputField::TYPE_PASSWORD);
+echo new Button($model, 'submit', 'Register');
+Form::end();
+?>

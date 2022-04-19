@@ -17,7 +17,7 @@ $this->title = 'Contact Us';
 <?php
 $form = Form::begin('', 'post');
 echo new InputField($model, 'subject');
-echo new InputField($model, 'email');
+echo new InputField($model, 'email', InputField::TYPE_EMAIL);
 echo new TextAreaField($model, 'body');
 echo new Button($model, 'submit', 'Send');
 //echo $form->field($model, 'subject');
