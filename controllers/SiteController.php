@@ -14,21 +14,14 @@ class SiteController extends Controller
 
     public function home()
     {
-        $params = [
-            'name' => 'melbs'
-        ];
-
-        return $this->render('home', $params);
+        return $this->render('home');
     }
 
 
     public function contact()
     {
-        $params = [
-            'name' => 'melbs'
-        ];
 
-        return $this->render('contact', $params);
+        return $this->render('contact');
 
     }
 }
