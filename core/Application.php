@@ -17,6 +17,7 @@ class Application
     public ?DbModel $user; // variable could be null
     public string $userClass;
     public string $layout = 'main';
+    public View $view;
 
     public function __construct($rootPath, array $config)
     {
@@ -26,6 +27,7 @@ class Application
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
         $this->session = new Session();
+        $this->view = new View();
         $this->db = new Database($config['db']);
 
 
@@ -49,7 +51,7 @@ class Application
             $errorCode = $e->getCode();
 
             $this->response->setStatusCode($errorCode);
-            echo $this->router->renderView("error", [
+            echo $this->view->renderView("error", [
                 'exception' => $e
             ]);
         }
