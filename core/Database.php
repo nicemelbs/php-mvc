@@ -15,17 +15,6 @@ class Database
         $this->pdo = new \PDO($dsn, $user, $password);
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
-//        $client = new MongoDB\Client(
-//            'mongodb+srv://root:1Vidi679Hrv91Zau@cluster0.niaqv.mongodb.net/sample_airbnb?retryWrites=true&w=majority');
-//        $db = $client->selectDatabase('sample_airbnb');
-//        $var = $db->selectCollection('listingsAndReviews');
-//
-//        $var = $var->findOne(['beds' => ['$lt' => 2]]);
-//
-//        echo '<pre>';
-//        var_dump($var);
-//        echo '</pre>';
-//        exit;
     }
 
     //read files from migrations folder
