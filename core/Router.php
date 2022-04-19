@@ -38,8 +38,18 @@ class Router
         }
 
         if (is_array($callback)) {
-            $callback[0] = new $callback[0]();
-            Application::$app->setController($callback[0]);
+            /**
+             * @var Controller $controller
+             */
+            $controller = new $callback[0]();
+            Application::$app->controller = $controller;
+            $controller->action = $callback[1];
+            $callback[0] = $controller;
+
+            foreach ($controller->getMiddlewares() as $middleware) {
+                $middleware->execute();
+            }
+
         }
 
         return call_user_func($callback, $this->request, $this->response);
@@ -61,6 +71,10 @@ class Router
 
     protected function layoutContent()
     {
+        if (Application::$app->controller) {
+            $layout = Application::$app->controller->layout;
+        }
+
         $layout = Application::$app->getLayout();
         //output buffering way to store output to variables
         ob_start();

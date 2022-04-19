@@ -23,7 +23,7 @@ class LoginForm extends Model
         $user = User::findOne(['email' => $this->email]);
 
         if (!$user || password_verify($this->password, $user->password) === false) {
-            $this->addError('email', 'Wrong login information provided');
+            $this->addError('email', 'Invalid login information.');
             $this->addError('password', '');
             return false;
         }

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\middleware\AuthMiddleware;
 use app\core\Request;
 use app\core\Response;
 use app\models\LoginForm;
@@ -11,6 +12,12 @@ use app\models\User;
 
 class AuthController extends Controller
 {
+
+    public function __construct()
+    {
+        //register middleware
+        $this->registerMiddleware(new AuthMiddleware(['profile']));
+    }
 
     public function register(Request $request)
     {
@@ -66,6 +73,11 @@ class AuthController extends Controller
         Application::$app->session->destroy();
         Application::$app->session->setFlash('success', 'Logged out successfully.');
         $response->redirect('/');
+    }
+
+    public function profile(Request $request, Response $response)
+    {
+        return $this->render('profile');
     }
 
 }

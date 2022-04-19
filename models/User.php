@@ -9,7 +9,6 @@ class User extends UserModel
     public string $email = '';
     public string $password = '';
     public string $passwordConfirm = '';
-    static string $tableName = 'users';
 
     public function save()
     {
@@ -61,5 +60,11 @@ class User extends UserModel
     public function getDisplayName(): string
     {
         return $this->firstname . ' ' . $this->lastname;
+    }
+
+
+    public function tableName()
+    {
+        return 'users';
     }
 }

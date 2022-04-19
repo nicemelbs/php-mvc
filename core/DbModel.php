@@ -4,7 +4,7 @@ namespace app\core;
 
 abstract class DbModel extends Model
 {
-    static string $tableName;
+    abstract public function tableName();
 
     private static function prepare(string $query)
     {
@@ -44,7 +44,7 @@ abstract class DbModel extends Model
 
     public function isUnique($attribute, $value): bool
     {
-        $tableName = static::$tableName;
+        $tableName = $this->tableName;
         $query = "SELECT * FROM $tableName WHERE $attribute = :$attribute";
         $statement = self::prepare($query);
         $statement->bindValue(':' . $attribute, $value);
@@ -56,7 +56,7 @@ abstract class DbModel extends Model
     //find one record with attribute values
     public static function findOne(array $attributes): ?self
     {
-        $tableName = static::$tableName;
+        $tableName = static::tableName();
         $query = "SELECT * FROM $tableName WHERE ";
         $query .= implode(' AND ', array_map(function ($attribute) {
             return "$attribute = :$attribute";
@@ -66,7 +66,10 @@ abstract class DbModel extends Model
             $statement->bindValue(':' . $attribute, $value);
         }
         $statement->execute();
-        return $statement->fetchObject(static::class);
+        $object = $statement->fetchObject(static::class);
+
+        if ($object === false) return null;
+        return $object;
     }
 
 }

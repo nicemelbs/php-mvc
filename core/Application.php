@@ -14,6 +14,7 @@ class Application
     public Database $db;
     public ?DbModel $user; // variable could be null
     public string $userClass;
+    public string $layout = 'main';
 
     public function __construct($rootPath, array $config)
     {

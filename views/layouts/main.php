@@ -43,7 +43,7 @@ use app\core\Application;
                 <?php else: ?>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link disabled">   <?= Application::$app->user->getDisplayName() ?> </a>
+                            <a class="nav-link" href="/profile">   <?= Application::$app->user->getDisplayName() ?> </a>
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">Logout</a>
                         </li>

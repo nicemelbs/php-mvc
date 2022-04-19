@@ -2,9 +2,39 @@
 
 namespace app\core;
 
+use app\core\middleware\BaseMiddleware;
+
 class Controller
 {
-    protected $layout = 'main';
+    public $layout = 'main';
+
+    /**
+     * @var BaseMiddleware[]
+     */
+    public array $middlewares = [];
+
+    /**
+     * @return BaseMiddleware[]
+     */
+    public function getMiddlewares(): array
+    {
+        return $this->middlewares;
+    }
+
+    /**
+     * @param BaseMiddleware[] $middlewares
+     */
+    public function setMiddlewares(array $middlewares): void
+    {
+        $this->middlewares = $middlewares;
+    }
+
+    public string $action;
+
+    /**
+     * @var string[]
+     */
+    public array $actions = [];
 
     //GET: /users
     //route: users.index
@@ -67,5 +97,10 @@ class Controller
     public function setLayout(string $layout): void
     {
         $this->layout = $layout;
+    }
+
+    public function registerMiddleware(Basemiddleware $middleware)
+    {
+        $this->middlewares[] = $middleware;
     }
 }
