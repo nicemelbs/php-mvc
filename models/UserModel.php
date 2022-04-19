@@ -12,10 +12,10 @@ class UserModel extends DbModel
     public string $password = '';
     public string $passwordConfirm = '';
 
-    public function register()
+    public function save()
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-        parent::save();
+        return parent::save();
     }
 
     public function rules(): array
@@ -26,7 +26,8 @@ class UserModel extends DbModel
             'firstname' => [self::RULE_REQUIRED, [self::RULE_MAX, 'max' => 10]],
 
             'lastname' => [self::RULE_REQUIRED],
-            'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
+            'email' => [self::RULE_REQUIRED,
+                self::RULE_EMAIL, [self::RULE_UNIQUE, 'unique_value' => 'email']],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8]],
             'passwordConfirm' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
         ];

@@ -40,5 +40,17 @@ abstract class DbModel extends Model
         }
 
         $statement->execute();
+        return true;
+    }
+
+    public function isUnique($attribute, $value): bool
+    {
+        $tableName = $this->tableName();
+        $query = "SELECT * FROM $tableName WHERE $attribute = :$attribute";
+        $statement = self::prepare($query);
+        $statement->bindValue(':' . $attribute, $value);
+        $statement->execute();
+        $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return empty($result);
     }
 }

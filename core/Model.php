@@ -56,6 +56,10 @@ abstract class Model
                 if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
                     $this->addError($attribute, self::RULE_MATCH);
                 }
+
+                if ($ruleName === self::RULE_UNIQUE && !$this->isUnique($attribute, $value)) {
+                    $this->addError($attribute, self::RULE_UNIQUE, $rule);
+                }
             }
 
         }
@@ -81,7 +85,7 @@ abstract class Model
             self::RULE_MIN => 'Must be {min} characters or more',
             self::RULE_MAX => 'Must be {max} characters or fewer',
             self::RULE_MATCH => 'Values do not match',
-            self::RULE_UNIQUE => 'Value is not unique',
+            self::RULE_UNIQUE => 'This {unique_value} is already taken',
         ];
     }
 
@@ -93,10 +97,8 @@ abstract class Model
 
     abstract public function rules(): array;
 
-    private function isUnique(int $attribute, $value): bool
-    {
-        return true;
-    }
+    //check if an entry with the same value already exists in the database
+    abstract public function isUnique($attribute, $value): bool;
 
     public function hasError($attribute): bool
     {
