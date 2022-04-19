@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\core\Application;
 use app\core\Model;
 
 class LoginForm extends Model
@@ -22,13 +23,12 @@ class LoginForm extends Model
         $user = User::findOne(['email' => $this->email]);
 
         if (!$user || password_verify($this->password, $user->password) === false) {
-            $this->addError('email', 'Wrong login or password');
+            $this->addError('email', 'Wrong login information provided');
             $this->addError('password', '');
             return false;
         }
 
-//        return Application::$app->login($user);
-        return $user;
+        return Application::$app->login($user);
     }
 
     public function labels(): array

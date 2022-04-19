@@ -27,13 +27,30 @@ use app\core\Application;
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/register">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
             </ul>
+
+            <div class="d-flex justify-content-end">
+
+                <?php if (Application::isGuest()): ?>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Register</a>
+                        </li>
+                    </ul>
+                <?php else: ?>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link disabled">   <?= Application::$app->user->getDisplayName() ?> </a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                <?php endif ?>
+            </div>
+
         </div>
     </div>
 </nav>

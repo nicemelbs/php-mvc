@@ -17,7 +17,8 @@ $config = [
         'dbname' => $_ENV['DB_NAME'],
 //        'host' => $_ENV['DB_HOST'],
 //        'port' => $_ENV['DB_PORT'],
-    ]
+    ],
+    'userClass' => app\models\User::class,
 ];
 
 
@@ -33,5 +34,6 @@ $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
+$app->router->get('/logout', [AuthController::class, 'logout']);
 
 $app->run();

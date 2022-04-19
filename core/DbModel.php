@@ -69,5 +69,4 @@ abstract class DbModel extends Model
         return $statement->fetchObject(static::class);
     }
 
-
 }

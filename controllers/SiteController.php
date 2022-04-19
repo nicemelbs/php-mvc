@@ -10,11 +10,6 @@ class SiteController extends Controller
     public function handleContact(Request $request)
     {
         $body = $request->getBody();
-
-//        echo '<pre>';
-//        var_dump($body);
-//        echo '</pre>';
-//        exit;
     }
 
     public function home()

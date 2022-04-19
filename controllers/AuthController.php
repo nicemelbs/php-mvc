@@ -47,6 +47,8 @@ class AuthController extends Controller
             $loginForm->loadData($request->getBody());
 
             if ($loginForm->validate() && $loginForm->login()) {
+                Application::$app->session
+                    ->setFlash('success', 'Welcome back, ' . Application::$app->user->getDisplayName() . '!');
                 $response->redirect('/');
                 return;
             }
@@ -57,6 +59,13 @@ class AuthController extends Controller
         return $this->render('login', [
             'model' => $loginForm
         ]);
+    }
+
+    public function logout(Request $request, Response $response)
+    {
+        Application::$app->session->destroy();
+        Application::$app->session->setFlash('success', 'Logged out successfully.');
+        $response->redirect('/');
     }
 
 }
