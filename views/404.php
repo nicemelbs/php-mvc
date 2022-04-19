@@ -1,1 +1,0 @@
-<h1>HTTP 404: Not found</h1>

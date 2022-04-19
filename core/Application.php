@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use Exception;
+
 class Application
 {
     public Router $router;
@@ -41,16 +43,18 @@ class Application
 
     public function run()
     {
-        echo $this->router->resolve();
+        try {
+            echo $this->router->resolve();
+        } catch (Exception $e) {
+            $errorCode = $e->getCode();
+
+            $this->response->setStatusCode($errorCode);
+            echo $this->router->renderView("error", [
+                'exception' => $e
+            ]);
+        }
     }
 
-    /**
-     * @return Controller
-     */
-    public function getController(): Controller
-    {
-        return $this->controller;
-    }
 
     /**
      * @param Controller $controller
@@ -62,10 +66,10 @@ class Application
 
     public function getLayout(): string
     {
-        return $this->getController()->getLayout();
+        return self::$app->layout;
     }
 
-    public function login(DbModel $user)
+    public function login(DbModel $user): bool
     {
         $this->user = $user;
         $primaryKey = $user->primaryKey();

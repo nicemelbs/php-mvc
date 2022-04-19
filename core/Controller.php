@@ -6,7 +6,7 @@ use app\core\middleware\BaseMiddleware;
 
 class Controller
 {
-    public $layout = 'main';
+    public string $layout = 'main';
 
     /**
      * @var BaseMiddleware[]
