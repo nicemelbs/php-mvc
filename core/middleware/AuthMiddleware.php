@@ -25,7 +25,7 @@ class AuthMiddleware extends BaseMiddleware
     {
         //if user is guest, throw not authorized exception
         if (Application::isGuest()) {
-            if (empty($this->actions) || in_array(Application::$app->controller->actions, $this->actions)) {
+            if (empty($this->actions) || in_array(Application::$app->controller->action, $this->actions)) {
                 throw new ForbiddenException();
             }
         }

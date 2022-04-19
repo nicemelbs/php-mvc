@@ -29,7 +29,7 @@ class Controller
         $this->middlewares = $middlewares;
     }
 
-    public string $action;
+    public string $action = '';
 
     /**
      * @var string[]
