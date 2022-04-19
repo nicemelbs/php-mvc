@@ -11,7 +11,7 @@ class User extends DbModel
     public string $email = '';
     public string $password = '';
     public string $passwordConfirm = '';
-    public string $tableName = 'users';
+    static string $tableName = 'users';
 
     public function save()
     {
@@ -32,12 +32,6 @@ class User extends DbModel
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8]],
             'passwordConfirm' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
         ];
-    }
-
-
-    public function tableName(): string
-    {
-        return $this->tableName;
     }
 
     public function attributes(): array

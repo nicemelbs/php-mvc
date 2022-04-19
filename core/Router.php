@@ -42,7 +42,7 @@ class Router
             Application::$app->setController($callback[0]);
         }
 
-        return call_user_func($callback, $this->request);
+        return call_user_func($callback, $this->request, $this->response);
     }
 
     public function renderView($view, $params = [])

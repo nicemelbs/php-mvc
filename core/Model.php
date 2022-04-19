@@ -29,36 +29,35 @@ abstract class Model
             $value = $this->{$attribute};
             foreach ($rules as $rule) {
                 $ruleName = $rule;
-
                 if (is_array($rule)) {
                     $ruleName = $rule[0];
                 }
 
                 if ($ruleName === self::RULE_REQUIRED && empty($value)) {
-                    $this->addError($attribute, self::RULE_REQUIRED);
+                    $this->addErrorForRule($attribute, self::RULE_REQUIRED);
                 }
 
                 //$value being an empty string is redundant for length validation
                 if ($ruleName === self::RULE_EMAIL && !empty($value) && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                    $this->addError($attribute, self::RULE_EMAIL);
+                    $this->addErrorForRule($attribute, self::RULE_EMAIL);
                 }
 
                 //rule[1] is the value of the rule
                 //$value being an empty string is redundant for length validation
                 if ($ruleName === self::RULE_MIN && !empty($value) && strlen($value) < $rule['min']) {
-                    $this->addError($attribute, self::RULE_MIN, $rule);
+                    $this->addErrorForRule($attribute, self::RULE_MIN, $rule);
                 }
 
                 if ($ruleName === self::RULE_MAX && strlen($value) > $rule['max']) {
-                    $this->addError($attribute, self::RULE_MAX, $rule);
+                    $this->addErrorForRule($attribute, self::RULE_MAX, $rule);
                 }
 
                 if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
-                    $this->addError($attribute, self::RULE_MATCH);
+                    $this->addErrorForRule($attribute, self::RULE_MATCH);
                 }
 
                 if ($ruleName === self::RULE_UNIQUE && !$this->isUnique($attribute, $value)) {
-                    $this->addError($attribute, self::RULE_UNIQUE, $rule);
+                    $this->addErrorForRule($attribute, self::RULE_UNIQUE, $rule);
                 }
             }
 
@@ -68,12 +67,17 @@ abstract class Model
     }
 
     //adds error to $errors array
-    protected function addError($attribute, $rule, $params = [])
+    private function addErrorForRule($attribute, $rule, $params = [])
     {
         $message = $this->errorMessages()[$rule] ?? '';
         foreach ($params as $key => $value) {
             $message = str_replace("{{$key}}", $value, $message);
         }
+        $this->errors[$attribute][] = $message;
+    }
+
+    public function addError($attribute, $message)
+    {
         $this->errors[$attribute][] = $message;
     }
 
@@ -96,9 +100,6 @@ abstract class Model
 
 
     abstract public function rules(): array;
-
-    //check if an entry with the same value already exists in the database
-    abstract public function isUnique($attribute, $value): bool;
 
     public function hasError($attribute): bool
     {

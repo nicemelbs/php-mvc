@@ -4,13 +4,12 @@ namespace app\core;
 
 abstract class DbModel extends Model
 {
+    static string $tableName;
 
     private static function prepare(string $query)
     {
         return Application::$app->db->pdo->prepare($query);
     }
-
-    abstract public function tableName(): string;
 
     abstract public function attributes(): array;
 
@@ -45,7 +44,7 @@ abstract class DbModel extends Model
 
     public function isUnique($attribute, $value): bool
     {
-        $tableName = $this->tableName();
+        $tableName = static::$tableName;
         $query = "SELECT * FROM $tableName WHERE $attribute = :$attribute";
         $statement = self::prepare($query);
         $statement->bindValue(':' . $attribute, $value);
@@ -53,4 +52,22 @@ abstract class DbModel extends Model
         $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
         return empty($result);
     }
+
+    //find one record with attribute values
+    public static function findOne(array $attributes): ?self
+    {
+        $tableName = static::$tableName;
+        $query = "SELECT * FROM $tableName WHERE ";
+        $query .= implode(' AND ', array_map(function ($attribute) {
+            return "$attribute = :$attribute";
+        }, array_keys($attributes)));
+        $statement = self::prepare($query);
+        foreach ($attributes as $attribute => $value) {
+            $statement->bindValue(':' . $attribute, $value);
+        }
+        $statement->execute();
+        return $statement->fetchObject(static::class);
+    }
+
+
 }

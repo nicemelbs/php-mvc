@@ -29,9 +29,6 @@ class Field
 
     public function __toString()
     {
-//        echo '<pre>';
-//        var_dump($this->attribute, $this->model->labels()[$this->attribute]);
-//        echo '</pre>';
         return sprintf('
             <div class="form-group">
                 <label for="%s">%s</label>
@@ -41,7 +38,7 @@ class Field
             $this->attribute,
             $this->model->labels()[$this->attribute] ?? $this->attribute,
             $this->type,
-            $this->attribute,
+            $this->model->hasError($this->attribute) ? 'is-invalid' : '',
             $this->attribute,
             $this->attribute,
             $this->model->{$this->attribute},
