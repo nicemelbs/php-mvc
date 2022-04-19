@@ -32,11 +32,27 @@ class AuthController extends Controller
     }
 
 
-    public function login()
+    public function login(Request $request)
 
     {
         $this->setLayout('auth');
-        return $this->render("login");
+        $userModel = new UserModel();
+
+        if ($request->isPost()) {
+            $userModel->loadData($request->getBody());
+            if ($userModel->validate()) {
+                return 'Success';
+            }
+
+            return $this->render('login', [
+                'model' => $userModel
+            ]);
+        }
+
+
+        return $this->render('login', [
+            'model' => $userModel
+        ]);
     }
 
 }

@@ -12,6 +12,9 @@
     }
   ],
   "require": {
-    "guzzlehttp/guzzle": "^7.4"
+    "guzzlehttp/guzzle": "^7.4",
+    "vlucas/phpdotenv": "^5.4",
+    "mongodb/mongodb": "^1.12",
+    "ext-pdo": "*"
   }
 }
