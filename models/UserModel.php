@@ -14,7 +14,8 @@ class UserModel extends DbModel
 
     public function register()
     {
-        $this->save();
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        parent::save();
     }
 
     public function rules(): array
@@ -40,11 +41,10 @@ class UserModel extends DbModel
     public function attributes(): array
     {
         return [
-            'firstname' => $this->firstname,
-            'lastname' => $this->lastname,
-            'email' => $this->email,
-            //hash the password before passing it to the database
-            'password' => password_hash($this->password, PASSWORD_DEFAULT),
+            'firstname',
+            'lastname',
+            'email',
+            'password',
         ];
     }
 

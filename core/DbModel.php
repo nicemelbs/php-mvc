@@ -22,16 +22,21 @@ abstract class DbModel extends Model
         $tableName = $this->tableName();
         $attributes = $this->attributes();
 
+        $params = array_map(function ($attribute) {
+            return ':' . $attribute;
+        }, $attributes);
+
         $query = "INSERT INTO $tableName (";
-        $query .= implode(', ', array_keys($attributes));
-        $query .= ') VALUES (:';
-        $query .= implode(',:', array_keys($attributes));
+        $query .= implode(',', $attributes);
+        $query .= ') VALUES (';
+        $query .= implode(',', $params);
         $query .= ')';
 
         $statement = self::prepare($query);
 
-        foreach ($attributes as $key => $value) {
-            $statement->bindValue(":$key", $value);
+        foreach ($attributes as $attribute) {
+            $statement->bindValue(':' . $attribute, $this->{$attribute});
+
         }
 
         $statement->execute();
