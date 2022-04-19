@@ -44,7 +44,7 @@ abstract class DbModel extends Model
 
     public function isUnique($attribute, $value): bool
     {
-        $tableName = $this->tableName;
+        $tableName = static::tableName();
         $query = "SELECT * FROM $tableName WHERE $attribute = :$attribute";
         $statement = self::prepare($query);
         $statement->bindValue(':' . $attribute, $value);
