@@ -62,7 +62,7 @@ class UserModel extends DbModel
             'lastname' => 'Last Name',
             'email' => 'Email',
             'password' => 'Password',
-            'passwordConfirm' => 'Password Confirm',
+            'passwordConfirm' => 'Confirm Password',
         ];
     }
 }
