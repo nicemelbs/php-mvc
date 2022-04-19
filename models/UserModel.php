@@ -2,9 +2,9 @@
 
 namespace app\models;
 
-use app\core\Model;
+use app\core\DbModel;
 
-class UserModel extends Model
+class UserModel extends DbModel
 {
     public string $firstname = '';
     public string $lastname = '';
@@ -14,8 +14,7 @@ class UserModel extends Model
 
     public function register()
     {
-        //TODO: add logic
-        return true;
+        $this->save();
     }
 
     public function rules(): array
@@ -33,4 +32,24 @@ class UserModel extends Model
     }
 
 
+    public function tableName(): string
+    {
+        return 'users';
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'email' => $this->email,
+            //hash the password before passing it to the database
+            'password' => password_hash($this->password, PASSWORD_DEFAULT),
+        ];
+    }
+
+    public function primaryKey(): string
+    {
+        return 'id';
+    }
 }
