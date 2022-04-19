@@ -1,20 +1,28 @@
-<h1>Contact us page</h1>
-<form action="" method="post">
-    <div class="mb-3">
-        <label for="name" name="name" class="form-label">Name</label>
-        <input type="text" name="name" id="name" class="form-control"/>
-        <label for="email" class="form-label">Email address</label>
-        <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
+<?php
 
+use app\core\forms\Button;
+use app\core\forms\Form;
+use app\core\forms\InputField;
+use app\core\forms\TextAreaField;
+use app\core\Model;
 
-    <div class="mb-3">
-        <label for="body">Body</label>
-        <textarea class="form-control" id="body" name="body"></textarea>
-        <div class="form-text">how can we help?</div>
-    </div>
+/**
+ * @var $model Model
+ */
 
+$this->title = 'Contact Us';
+?>
+    <h1>Contact us page</h1>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<?php
+$form = Form::begin('', 'post');
+echo new InputField($model, 'subject');
+echo new InputField($model, 'email');
+echo new TextAreaField($model, 'body');
+echo new Button($model, 'submit', 'Send');
+//echo $form->field($model, 'subject');
+//echo $form->field($model, 'email');
+//echo $form->field($model, 'body');
+?>
+    <!--    <button type="submit" class="btn btn-primary">Submit</button>-->
+<?php Form::end(); ?>

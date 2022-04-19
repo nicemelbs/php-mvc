@@ -91,4 +91,17 @@ class Application
     {
         return !self::$app->user;
     }
+
+    //Generate HTML tag to display the favicon
+    public function favicon($fileName = 'favicon.ico'): string
+    {
+        $fileName = realpath(self::$ROOT_DIR . '/' . $fileName);
+        //check if file exists
+        if (file_exists($fileName)) {
+            $favicon = '<link rel="shortcut icon" href="' . $fileName . '"><link type="image/x-icon" rel="icon" href="' . $fileName . '">';
+        } else {
+            $favicon = '';
+        }
+        return $favicon;
+    }
 }

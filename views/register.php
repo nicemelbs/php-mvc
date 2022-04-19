@@ -2,8 +2,8 @@
 
 <?php
 
-use app\core\forms\Field;
 use app\core\forms\Form;
+use app\core\forms\InputField;
 
 ?>
 
@@ -16,8 +16,8 @@ use app\core\forms\Form;
         <?php echo $form->field($model, 'lastname'); ?>
     </div>
 </div>
-<?php echo $form->field($model, 'email')->setType(Field::TYPE_EMAIL); ?>
-<?php echo $form->field($model, 'password')->setType(Field::TYPE_PASSWORD); ?>
-<?php echo $form->field($model, 'passwordConfirm')->setType(Field::TYPE_PASSWORD); ?>
+<?php echo $form->field($model, 'email')->setType(InputField::TYPE_EMAIL); ?>
+<?php echo $form->field($model, 'password')->setType(InputField::TYPE_PASSWORD); ?>
+<?php echo $form->field($model, 'passwordConfirm')->setType(InputField::TYPE_PASSWORD); ?>
 <button type="submit" class="btn btn-primary">Submit</button>
 <?php echo Form::end(); ?>
