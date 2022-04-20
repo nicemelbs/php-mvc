@@ -36,11 +36,9 @@ abstract class DbModel extends Model
 
         foreach ($attributes as $attribute) {
             $statement->bindValue(':' . $attribute, $this->{$attribute});
-
         }
 
-        $statement->execute();
-        return true;
+        return $statement->execute();
     }
 
     public function isUnique($attribute, $value): bool
@@ -61,7 +59,7 @@ abstract class DbModel extends Model
     }
 
     //find all records with attribute values
-    public static function findAll(array $attributes): array
+    public static function findAll(array $attributes = []): array
     {
         $statement = self::prepareStatement($attributes);
         $statement->execute();
@@ -72,11 +70,15 @@ abstract class DbModel extends Model
     {
 
         $tableName = static::tableName();
-        $query = "SELECT * FROM $tableName WHERE ";
-        $query .= implode(' AND ', array_map(function ($attribute) {
-            return "$attribute = :$attribute";
-        }, array_keys($attributes)));
 
+        if (empty($attributes)) {
+            $query = "SELECT * from $tableName";
+        } else {
+            $query = "SELECT * FROM $tableName WHERE ";
+            $query .= implode(' AND ', array_map(function ($attribute) {
+                return "$attribute = :$attribute";
+            }, array_keys($attributes)));
+        }
         $statement = self::prepare($query);
         foreach ($attributes as $param => $value) {
             $statement->bindValue(':' . $param, $value);

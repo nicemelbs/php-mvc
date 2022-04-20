@@ -10,7 +10,7 @@ class m0002_posts extends Migration
         parent::up();
         $db = $this->getDB();
 
-        $sql = "CREATE TABLE `posts` (
+        $sql = "CREATE TABLE `news` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `title` varchar(255) NOT NULL,
             `body` varchar(3000) NOT NULL,

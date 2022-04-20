@@ -4,19 +4,18 @@
  */
 ?>
 
-<h1>Profile Page</h1>
 <div class="container">
     <?php if ($user): ?>
         <h3><?= $user->getDisplayName() ?></h3>
         <div class="container"><?= $user->email ?></div>
 
         <?php
-        $posts = $user->getPosts();
+        $allNews = $user->getAllNews();
 
-        if (!empty($posts)) {
+        if (!empty($allNews)) {
             echo "<ul>";
-            foreach ($posts as $post) {
-                echo "<li><a href='/news/" . $post->primaryValue() . "'>" . $post->title . "</a></li>";
+            foreach ($allNews as $news) {
+                echo "<li><a href='/news/" . $news->primaryValue() . "'>" . $news->title . "</a></li>";
             }
 
             echo "</ul>";

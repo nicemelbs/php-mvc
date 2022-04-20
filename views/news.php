@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $news \app\models\Post
+ * @var $news \app\models\News
  */
 
 if ($news) {

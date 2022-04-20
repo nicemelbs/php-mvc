@@ -9,7 +9,7 @@ use app\core\Application;
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?= $this->title ?? 'PHP Framework' ?></title>
+    <title><?= $title ?? 'PHP Framework' ?></title>
 
     <?= Application::$app->favicon() ?>
 </head>
@@ -29,6 +29,12 @@ use app\core\Application;
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
+
+                <?php if (!Application::isGuest()): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/write">Publish a news!</a>
+                    </li>
+                <?php endif ?>
             </ul>
 
             <div class="d-flex justify-content-end">

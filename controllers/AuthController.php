@@ -8,6 +8,7 @@ use app\core\middleware\AuthMiddleware;
 use app\core\Request;
 use app\core\Response;
 use app\models\LoginForm;
+use app\models\NewsForm;
 use app\models\User;
 
 class AuthController extends Controller
@@ -16,7 +17,7 @@ class AuthController extends Controller
     public function __construct()
     {
         //register middleware
-        $this->registerMiddleware(new AuthMiddleware(['profile']));
+        $this->registerMiddleware(new AuthMiddleware(['profile', 'create-news']));
     }
 
     public function register(Request $request)
@@ -64,7 +65,8 @@ class AuthController extends Controller
 
 
         return $this->render('login', [
-            'model' => $loginForm
+            'model' => $loginForm,
+            'title' => 'Log in'
         ]);
     }
 
@@ -79,8 +81,25 @@ class AuthController extends Controller
     {
         $user = Application::$app->user;
         return $this->render('profile', [
-            'user' => $user
+            'user' => $user,
+            'title' => $user->getDisplayName()
         ]);
     }
 
+    public function write(Request $request, Response $response)
+    {
+        $news = new NewsForm();
+        if ($request->isPost()) {
+            $news->loadData($request->getBody());
+
+            if ($news->validate() && $news->save()) {
+                Application::$app->session->setFlash('success', 'Article published.');
+                return $response->redirect('/profile');
+            }
+        }
+        return $this->render('write', [
+            'model' => $news,
+        ]);
+
+    }
 }

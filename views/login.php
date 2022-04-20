@@ -13,7 +13,7 @@ $this->title = 'Login';
 ?>
     <h1>Log in</h1>
 <?php
-$form = Form::begin('', 'POST');
+$form = Form::begin('', 'post');
 echo new InputField($model, 'email', InputField::TYPE_EMAIL);
 echo new InputField($model, 'password', InputField::TYPE_PASSWORD);
 echo new Button($model, 'submit', 'Log in');

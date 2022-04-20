@@ -41,6 +41,10 @@ $app->router->get('/profile', [AuthController::class, 'profile']);
 $app->router->get('/profile/{id}', [SiteController::class, 'profile']);
 $app->router->get('/profile/{id:\d+}/{username}', [SiteController::class, 'profile']);
 
+$app->router->get('/news/', [SiteController::class, 'allNews']);
 $app->router->get('/news/{id}', [SiteController::class, 'news']);
+
+$app->router->get('/write', [AuthController::class, 'write']);
+$app->router->post('/write', [AuthController::class, 'write']);
 
 $app->run();

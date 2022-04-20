@@ -9,8 +9,8 @@ class View
 
     public function renderView($view, $params = [])
     {
-        $viewContent = $this->renderOnlyView($view, $params);
         $layoutContent = $this->layoutContent();
+        $viewContent = $this->renderOnlyView($view, $params);
         return str_replace('{{ content }}', $viewContent, $layoutContent);
     }
 

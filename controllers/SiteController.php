@@ -4,12 +4,11 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
-use app\core\exceptions\ItemNotFoundException;
 use app\core\exceptions\NotFoundException;
 use app\core\Request;
 use app\core\Response;
 use app\models\ContactForm;
-use app\models\Post;
+use app\models\News;
 use app\models\User;
 
 class SiteController extends Controller
@@ -33,6 +32,7 @@ class SiteController extends Controller
         }
         return $this->render('contact', [
             'model' => $contact,
+            'title' => 'Contact us'
         ]);
     }
 
@@ -41,7 +41,8 @@ class SiteController extends Controller
         $params = $request->getRouteParams();
         $user = User::findById($params['id']);
         return $this->render('profile', [
-            'user' => $user
+            'user' => $user,
+            'title' => $user ? $user->getDisplayName() : ''
         ]);
     }
 
@@ -51,14 +52,26 @@ class SiteController extends Controller
     public function news(Request $request, Response $response)
     {
         $params = $request->getRouteParams();
-        $post = Post::findById($params['id']);
+        $news = News::findById($params['id']);
 
-        if (!$post) {
+        if (!$news) {
             throw new NotFoundException();
         }
 
         return $this->render('news', [
-            'news' => $post
+            'news' => $news,
+            'title' => $news->title
         ]);
+    }
+
+    public function allNews(Request $request, Response $response)
+    {
+        {
+            $allNews = News::findAll();
+            return $this->render('all-news', [
+                'allNews' => $allNews
+            ]);
+        }
+
     }
 }

@@ -22,9 +22,5 @@ echo new TextAreaField($model, 'body');
 echo new InputField($model, 'date', InputField::TYPE_DATE,);
 echo new InputField($model, 'time', InputField::TYPE_TIME);
 echo new Button($model, 'submit', 'Send');
-//echo $form->field($model, 'subject');
-//echo $form->field($model, 'email');
-//echo $form->field($model, 'body');
+Form::end();
 ?>
-    <!--    <button type="submit" class="btn btn-primary">Submit</button>-->
-<?php Form::end(); ?>

@@ -11,17 +11,17 @@ class User extends UserModel
         return $this->firstname . ' ' . $this->lastname;
     }
 
-    public function getPosts(): array
+    public function getAllNews(): array
     {
-        return Post::findAll(['user_id' => $this->{$this->primaryKey()}]);
+        return News::findAll(['user_id' => $this->{$this->primaryKey()}]);
     }
 
     /**
      * @static
      */
-    public function getPostById(int $id): Post
+    public function getNewsById(int $id): News
     {
-        return Post::findOne(['id' => $id]);
+        return News::findOne(['id' => $id]);
     }
 
 }
