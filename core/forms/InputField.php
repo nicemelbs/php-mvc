@@ -11,6 +11,7 @@ class InputField extends BaseField
 
     public const TYPE_BUTTON = 'button';
     public const TYPE_CHECKBOX = 'checkbox';
+    public const TYPE_COLOR = 'color';
     public const TYPE_DATE = 'date';
     public const TYPE_DATETIME_LOCAL = 'datetime-local';
     public const TYPE_EMAIL = 'email';
@@ -31,21 +32,37 @@ class InputField extends BaseField
     public const TYPE_URL = 'url';
     public const TYPE_WEEK = 'week';
 
-    public function __construct(Model $model, string $attribute, string $type = self::TYPE_TEXT)
+    protected array $options;
+
+    public function __construct(Model $model, string $attribute, string $type = self::TYPE_TEXT, $options = [])
     {
         $this->type = $type;
+        $this->options = $options;
         parent::__construct($model, $attribute);
     }
 
     public function renderInput(): string
     {
-        return sprintf('  <input type="%s" class="form-control %s" id="%s" name="%s" value="%s">',
+        return sprintf('  <input type="%s" class="form-control %s" id="%s" name="%s" value="%s" %s>',
             $this->type,
             $this->model->hasError($this->attribute) ? 'is-invalid' : '',
             $this->attribute,
             $this->attribute,
             $this->model->{$this->attribute},
+            $this->renderOptions()
         );
 
+    }
+
+    //bug: if $this->options has a key of type, class, id, name or value
+    //they won't be overriden by the input field as they are already set
+    private function renderOptions(): string
+    {
+        $options = '';
+        foreach ($this->options as $key => $value) {
+            $options .= sprintf('%s="%s" ', $key, $value);
+        }
+
+        return $options;
     }
 }

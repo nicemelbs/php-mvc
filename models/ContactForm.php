@@ -9,14 +9,18 @@ class ContactForm extends Model
     public string $subject = '';
     public string $email = '';
     public string $body = '';
+    public string $date = '';
+    public string $time = '';
 
 
     public function rules(): array
     {
         return [
-            'subject' => [SELF::RULE_REQUIRED],
-            'email' => [SELF::RULE_REQUIRED, SELF::RULE_EMAIL],
-            'body' => [SELF::RULE_REQUIRED],
+            'subject' => [self::RULE_REQUIRED],
+            'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
+            'body' => [self::RULE_REQUIRED],
+            'date' => [self::RULE_REQUIRED],
+            'time' => [self::RULE_REQUIRED]
         ];
     }
 
@@ -27,6 +31,8 @@ class ContactForm extends Model
             'email' => 'Email',
             'body' => 'Body',
             'button' => 'Send',
+            'date' => 'Date',
+            'time' => 'What time is it right now?',
         ];
     }
 

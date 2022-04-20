@@ -19,6 +19,8 @@ $form = Form::begin('', 'post');
 echo new InputField($model, 'subject');
 echo new InputField($model, 'email', InputField::TYPE_EMAIL);
 echo new TextAreaField($model, 'body');
+echo new InputField($model, 'date', InputField::TYPE_DATE,);
+echo new InputField($model, 'time', InputField::TYPE_TIME);
 echo new Button($model, 'submit', 'Send');
 //echo $form->field($model, 'subject');
 //echo $form->field($model, 'email');
