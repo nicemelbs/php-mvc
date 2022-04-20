@@ -3,7 +3,7 @@
 
 use app\core\Migration;
 
-class m0002_onething extends Migration
+class m0002_posts extends Migration
 {
     public function up()
     {
@@ -13,7 +13,7 @@ class m0002_onething extends Migration
         $sql = "CREATE TABLE `posts` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `title` varchar(255) NOT NULL,
-            `body` varchar(255) NOT NULL,
+            `body` varchar(3000) NOT NULL,
             `user_id` int(11) NOT NULL,
             `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
             `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

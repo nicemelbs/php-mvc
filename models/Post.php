@@ -10,7 +10,7 @@ class Post extends DbModel
     public string $title;
     public string $body;
     public string $user_id;
-
+    public string $post_id;
 
     public static function tableName()
     {
@@ -26,4 +26,5 @@ class Post extends DbModel
     {
         return User::findById($this->user_id);
     }
+
 }

@@ -3,7 +3,7 @@
 
 use app\core\Migration;
 
-class m0001_initial extends Migration
+class m0001_users extends Migration
 {
     public function up()
     {

@@ -43,11 +43,6 @@ abstract class UserModel extends \app\core\db\DbModel
         ];
     }
 
-    public function primaryKey(): string
-    {
-        return 'id';
-    }
-
     public function labels(): array
     {
         return [

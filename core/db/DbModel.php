@@ -84,4 +84,19 @@ abstract class DbModel extends Model
         return $statement;
     }
 
+    public static function findById(string $id): ?self
+    {
+        return self::findOne(['id' => $id]);
+    }
+
+    public function primaryKey(): string
+    {
+        return 'id';
+    }
+
+    public function primaryValue()
+    {
+        return $this->{$this->primaryKey()};
+    }
+
 }

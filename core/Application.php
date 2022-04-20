@@ -76,8 +76,7 @@ class Application
     public function login(DbModel $user): bool
     {
         $this->user = $user;
-        $primaryKey = $user->primaryKey();
-        $primaryValue = $user->{$primaryKey};
+        $primaryValue = $user->primaryValue();
         $this->session->set('user', $primaryValue);
 
         return true;

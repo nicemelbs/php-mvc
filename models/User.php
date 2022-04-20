@@ -5,10 +5,6 @@ namespace app\models;
 class User extends UserModel
 {
 
-    public static function findById(string $user_id): ?User
-    {
-        return self::findOne(['id' => $user_id]);
-    }
 
     public function getDisplayName(): string
     {
@@ -20,6 +16,9 @@ class User extends UserModel
         return Post::findAll(['user_id' => $this->{$this->primaryKey()}]);
     }
 
+    /**
+     * @static
+     */
     public function getPostById(int $id): Post
     {
         return Post::findOne(['id' => $id]);

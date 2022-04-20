@@ -26,8 +26,6 @@ $config = [
 $app = new Application(dirname(__DIR__), $config);
 $app->router->get('/', [SiteController::class, 'home']);
 
-$app->router->get('/profiles', 'profile');
-
 $app->router->get('/contact', [SiteController::class, 'contact']);
 $app->router->post('/contact', [SiteController::class, 'contact']);
 
@@ -36,7 +34,13 @@ $app->router->post('/register', [AuthController::class, 'register']);
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
 $app->router->get('/logout', [AuthController::class, 'logout']);
+
 $app->router->get('/profile', [AuthController::class, 'profile']);
-$app->router->get('/profile/{profile}', [AuthController::class, 'profile']);
+
+//register routes with arguments
+$app->router->get('/profile/{id}', [SiteController::class, 'profile']);
+$app->router->get('/profile/{id:\d+}/{username}', [SiteController::class, 'profile']);
+
+$app->router->get('/news/{id}', [SiteController::class, 'news']);
 
 $app->run();

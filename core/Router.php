@@ -22,6 +22,9 @@ class Router
 
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function resolve()
     {
         //determine the URL path and method
@@ -29,8 +32,12 @@ class Router
         $method = $this->request->getMethod();
         $callback = $this->routes[$method][$path] ?? false;
 
-        if ($callback === false) {
-            throw new NotFoundException();
+        if (!$callback) {
+            $callback = $this->getCallback();
+
+            if ($callback === false) {
+                throw new NotFoundException();
+            }
         }
 
         if (is_string($callback)) {
@@ -59,5 +66,62 @@ class Router
     public function post($path, $callback)
     {
         $this->routes['post'][$path] = $callback;
+    }
+
+    private function getCallback()
+    {
+        $method = $this->request->getMethod();
+        $url = $this->request->getPath();
+        $url = trim($url, '/');
+
+        //Get all routes for the current request method
+        $routes = $this->routes[$method] ?? [];
+
+        $routeParams = false;
+
+        // start iterating registered routes
+        foreach ($routes as $route => $callback) {
+            $route = trim($route, '/');
+            $routeNames = [];
+
+            if (!$route) {
+                continue;
+            }
+
+            // find all route names from route and save in $routeNames
+            if (preg_match_all('/\{(\w+)(:[^}]+)?}/', $route, $matches)) {
+                $routeNames = $matches[1];
+            }
+
+            // create route name into regex pattern
+            // @^ ... some regex .. $@ .... @ instead of '/' for slightly better readability
+            // this string should evaluate to something like
+            // "@^profile/(\w+)$@"
+            // "@^profile/(\d+)/(\w+)$@"
+            $routeRegex = "@^" .
+                preg_replace_callback('/\{\w+(:([^}]+))?}/',
+                    function ($matches) {
+                        if (isset($matches[2])) {
+                            return "({$matches[2]})";
+                        } else return "(\w+)";
+                    },
+                    $route
+                ) .
+                "$@";
+
+            if (preg_match_all($routeRegex, $url, $valueMatches)) {
+                $values = [];
+                for ($i = 1; $i < count($valueMatches); $i++) {
+                    $values[] = $valueMatches[$i][0];
+                }
+
+                $routeParams = array_combine($routeNames, $values);
+                $this->request->setRouteParams($routeParams);
+
+                return $callback;
+            }
+
+        }
+        return false;
     }
 }

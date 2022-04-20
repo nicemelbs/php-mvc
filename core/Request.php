@@ -5,6 +5,8 @@ namespace app\core;
 class Request
 {
 
+    public array $routeParams;
+
     public function getPath()
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
@@ -50,4 +52,16 @@ class Request
 
         return $this->getMethod() === 'post';
     }
+
+    public function setRouteParams(array $routeParams)
+    {
+        $this->routeParams = $routeParams;
+        return $this;
+    }
+
+    public function getRouteParams(): array
+    {
+        return $this->routeParams;
+    }
+
 }
