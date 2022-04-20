@@ -77,7 +77,10 @@ class AuthController extends Controller
 
     public function profile(Request $request, Response $response)
     {
-        return $this->render('profile');
+        $user = Application::$app->user;
+        return $this->render('profile', [
+            'user' => $user
+        ]);
     }
 
 }

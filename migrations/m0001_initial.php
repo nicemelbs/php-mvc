@@ -8,7 +8,7 @@ class m0001_initial extends Migration
     public function up()
     {
         parent::up();
-        $db = $this->getDb();
+        $db = $this->getDB();
         $sql = "CREATE TABLE `users` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `firstname` varchar(255) NOT NULL,

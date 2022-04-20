@@ -14,6 +14,7 @@ abstract class Model
     public array $errors = [];
 
     //Should be called with data = request->getBody()
+
     public function loadData($data)
     {
         foreach ($data as $key => $value) {
@@ -113,4 +114,5 @@ abstract class Model
         ];
 
     }
+
 }

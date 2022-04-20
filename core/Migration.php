@@ -4,8 +4,9 @@ namespace app\core;
 
 use app\core\db\Database;
 
-class Migration
+abstract class Migration
 {
+
     public function up()
     {
         //get the classname of the subclass calling this method
@@ -14,7 +15,7 @@ class Migration
 
     public function down()
     {
-
+        $this->db = $this->getDB();
         echo 'Executing ' . get_class($this) . ': down' . PHP_EOL;
     }
 
