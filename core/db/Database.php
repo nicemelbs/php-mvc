@@ -67,13 +67,6 @@ class Database
 
     private function getAppliedMigrations()
     {
-//        $query = $this->pdo->query('SELECT * FROM migrations');
-//        $migrations = $query->fetchAll(\PDO::FETCH_ASSOC);
-//        $appliedMigrations = [];
-//        foreach ($migrations as $migration) {
-//            $appliedMigrations[] = $migration['name'];
-//        }
-//        return $appliedMigrations;
 
         $statement = $this->pdo->prepare("SELECT migration from migrations");
         $statement->execute();
