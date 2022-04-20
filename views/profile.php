@@ -10,15 +10,19 @@
         <h3><?= $user->getDisplayName() ?></h3>
         <div class="container"><?= $user->email ?></div>
 
-        <?php $posts = $user->getPosts(); ?>
+        <?php
+        $posts = $user->getPosts();
 
-        <?php if (!empty($posts)): ?>
-            <?php $post = $posts[0]; ?>
-            <a href="/news/<?= $post->primaryValue() ?>"><h3><?= $post->title ?></h3></a>
-            <div class="container"> <?= $post->body ?></div>
-        <?php else: ?>
-            <div class="alert alert-warning"><h4>No posts to show</h4></div>
-        <?php endif; ?>
+        if (!empty($posts)) {
+            echo "<ul>";
+            foreach ($posts as $post) {
+                echo "<li><a href='/news/" . $post->primaryValue() . "'>" . $post->title . "</a></li>";
+            }
+
+            echo "</ul>";
+        }
+        ?>
+
     <?php else: ?>
         <div class="alert alert-warning"><h4>User not found.</h4></div>
     <?php endif; ?>
