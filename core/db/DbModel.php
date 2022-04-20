@@ -8,7 +8,7 @@ use PDOStatement;
 
 abstract class DbModel extends Model
 {
-    abstract public function tableName();
+    abstract public static function tableName();
 
     private static function prepare(string $query)
     {
@@ -19,7 +19,7 @@ abstract class DbModel extends Model
     //save data to database
     public function save()
     {
-        $tableName = $this->tableName();
+        $tableName = static::tableName();
         $attributes = $this->attributes();
 
         $params = array_map(function ($attribute) {
@@ -45,12 +45,7 @@ abstract class DbModel extends Model
 
     public function isUnique($attribute, $value): bool
     {
-        $tableName = static::tableName();
-        $query = "SELECT * FROM $tableName WHERE $attribute = :$attribute";
-        $statement = self::prepare($query);
-        $statement->bindValue(':' . $attribute, $value);
-        $statement->execute();
-        $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        static::findOne([$attribute => $value]);
         return empty($result);
     }
 
@@ -75,6 +70,7 @@ abstract class DbModel extends Model
 
     protected static function prepareStatement(array $attributes): PDOStatement
     {
+
         $tableName = static::tableName();
         $query = "SELECT * FROM $tableName WHERE ";
         $query .= implode(' AND ', array_map(function ($attribute) {

@@ -59,7 +59,7 @@ abstract class UserModel extends \app\core\db\DbModel
         ];
     }
 
-    public function tableName()
+    public static function tableName(): string
     {
         return 'users';
     }
