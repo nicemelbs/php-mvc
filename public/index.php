@@ -10,15 +10,14 @@ use app\models\User;
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
-
 $config = [
     'db' => [
         'dsn' => $_ENV['DB_DSN'],
         'user' => $_ENV['DB_USER'],
         'password' => $_ENV['DB_PASSWORD'],
         'dbname' => $_ENV['DB_NAME'],
-//        'host' => $_ENV['DB_HOST'],
-//        'port' => $_ENV['DB_PORT'],
+        'host' => $_ENV['DB_HOST'],
+        'port' => $_ENV['DB_PORT'],
     ],
     'userClass' => User::class,
 ];

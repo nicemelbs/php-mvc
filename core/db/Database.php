@@ -13,6 +13,11 @@ class Database
         $user = $config['user'] ?? '';
         $password = $config['password'] ?? '';
         $dbname = $config['dbname'] ?? '';
+        $host = $config['host'] ?? '';
+        $port = $config['port'] ?? '';
+
+        $dsn = $dsn . 'host=' . $host . ';port=' . $port . ';dbname=' . $dbname;
+
 
         $this->pdo = new \PDO($dsn, $user, $password);
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
